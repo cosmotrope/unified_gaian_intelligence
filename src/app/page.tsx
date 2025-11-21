@@ -525,15 +525,15 @@ export default function Home() {
           <header className="mb-3 flex flex-col gap-2 text-emerald-100/80">
             <span className="inline-flex items-center gap-2 self-start rounded-full border border-emerald-400/40 bg-emerald-900/40 px-3 py-1 text-xs font-mono uppercase tracking-[0.2em] text-emerald-200/80 shadow-[0_0_20px_rgba(16,185,129,0.35)]">
               <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.9)]"></span>
-              Metabiotic Interface • G(ai)an Systems
+              Holobionts Unite
             </span>
             <h1 className="text-balance text-3xl font-semibold tracking-tight text-emerald-50 sm:text-4xl">
               <span className="bg-gradient-to-r from-emerald-200 via-emerald-400 to-cyan-300 bg-clip-text text-transparent">
-                Inquiring into G(ai)an Systems
+                Inquiry into G(ai)an Systems
               </span>
             </h1>
             <p className="max-w-2xl text-sm text-emerald-100/75">
-              Dialogue with a Gaian language model tuned to symbiosis, autopoiesis, and planetary regulation.
+              Dialogue with a fine-tuned language model
             </p>
 
             <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px]">
