@@ -26,6 +26,8 @@ export default function Home() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [continuousListening, setContinuousListening] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [textScale, setTextScale] = useState<number>(1.05); // slightly larger default
+
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -350,7 +352,7 @@ export default function Home() {
     try {
       console.log('Sending text to speech API:', text);
 
-      // Stop speech recognition while AI is speaking
+      // Stop speech recognition while AI speaks
       if (isListening) {
         stopSpeechRecognition();
       }
@@ -510,7 +512,7 @@ export default function Home() {
   return (
     <>
       <div
-        className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-emerald-950 text-emerald-50"
+        className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-emerald-950 text-emerald-50"
         style={{
           fontFamily:
             'system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif',
@@ -518,9 +520,9 @@ export default function Home() {
       >
         {/* Slime-mold background layer */}
         <div className="pointer-events-none absolute inset-0">
-          <div className="slime-pulse absolute -left-40 top-10 h-80 w-80 rounded-full bg-emerald-500/18 blur-3xl" />
-          <div className="slime-creep absolute right-[-20%] top-1/3 h-[26rem] w-[26rem] rounded-full bg-lime-400/12 blur-3xl" />
-          <div className="slime-vein absolute bottom-[-10%] left-1/4 h-72 w-72 rounded-full bg-emerald-300/14 blur-3xl" />
+          <div className="slime-pulse absolute -left-40 top-10 h-96 w-96 rounded-full bg-emerald-500/30 blur-3xl" />
+          <div className="slime-creep absolute right-[-15%] top-1/3 h-[26rem] w-[26rem] rounded-full bg-lime-400/26 blur-3xl" />
+          <div className="slime-vein absolute bottom-[-8%] left-1/4 h-80 w-80 rounded-full bg-emerald-300/24 blur-3xl" />
         </div>
 
         <div className="relative mx-auto flex min-h-screen max-w-5xl flex-col px-4 py-8 sm:px-6 lg:px-8">
@@ -539,12 +541,15 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Chat container with reduced excess height */}
-          <div className="rounded-3xl border border-emerald-500/30 bg-emerald-900/20 shadow-[0_0_60px_rgba(6,95,70,0.6)] backdrop-blur-xl max-h-[80vh]">
-            <div className="flex max-h-[80vh] min-h-[420px] flex-col overflow-hidden rounded-3xl">
+          {/* Chat container, flexing without huge empty bottom space */}
+          <div
+            className="flex-1 rounded-3xl border border-emerald-500/30 bg-emerald-900/20 shadow-[0_0_60px_rgba(6,95,70,0.6)] backdrop-blur-xl"
+            style={{ fontSize: `${textScale}rem` }}
+          >
+            <div className="flex min-h-[420px] flex-col overflow-hidden rounded-3xl">
               {/* Top control membrane */}
               <div className="border-b border-emerald-500/30 bg-gradient-to-r from-emerald-950/70 via-slate-950/70 to-emerald-950/70 px-4 py-3 shadow-[0_12px_40px_rgba(15,118,110,0.45)]">
-                <div className="flex items-center justify-between gap-4">
+                <div className="flex flex-wrap items-center justify-between gap-4">
                   <div className="space-y-1">
                     <p className="text-xs font-mono uppercase tracking-[0.25em] text-emerald-300/80">
                       Channel • {continuousListening ? 'Bio-acoustic loop' : 'Text membrane'}
@@ -554,7 +559,23 @@ export default function Home() {
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3">
+                    {/* Text size slider */}
+                    <div className="flex items-center gap-2 rounded-full bg-slate-950/60 px-2 py-1">
+                      <span className="hidden text-[10px] font-mono uppercase tracking-[0.18em] text-emerald-300/90 sm:inline">
+                        Text Size
+                      </span>
+                      <input
+                        type="range"
+                        min={0.9}
+                        max={1.4}
+                        step={0.05}
+                        value={textScale}
+                        onChange={(e) => setTextScale(parseFloat(e.target.value))}
+                        className="h-1 w-24 cursor-pointer appearance-none rounded-full bg-emerald-800/70 accent-emerald-400"
+                      />
+                    </div>
+
                     <label
                       className={`group flex items-center gap-2 rounded-full border px-2 py-1 text-[10px] font-mono uppercase tracking-[0.18em] ${
                         isSpeaking
@@ -659,13 +680,13 @@ export default function Home() {
                         {message.role === 'assistant' && (
                           <div className="pointer-events-none absolute -left-2 top-3 h-4 w-4 rounded-full bg-emerald-400/40 blur-md" />
                         )}
-                        <p className="whitespace-pre-wrap text-[13px]">{message.content}</p>
+                        <p className="whitespace-pre-wrap text-[0.82rem]">{message.content}</p>
                       </div>
 
                       {message.role === 'assistant' && (
                         <button
                           onClick={() => speakText(message.content)}
-                          className="mt-1 inline-flex items-center gap-1 rounded-full border border-emerald-500/40 bg-slate-950/70 px-2 py-1 text-[10px] font-mono uppercase tracking-[0.18em] text-emerald-200/90 transition-colors hover:border-emerald-300 hover:bg-emerald-900/70"
+                          className="mt-1 inline-flex items-center gap-1 rounded-full border border-emerald-500/40 bg-slate-950/70 px-2 py-1 text-[0.65rem] font-mono uppercase tracking-[0.18em] text-emerald-200/90 transition-colors hover:border-emerald-300 hover:bg-emerald-900/70"
                           aria-label="Text to speech"
                         >
                           <Volume2 size={11} />
@@ -674,7 +695,7 @@ export default function Home() {
                       )}
 
                       {message.timestamp && (
-                        <span className="mt-1 text-[10px] font-mono uppercase tracking-[0.16em] text-emerald-400/70">
+                        <span className="mt-1 text-[0.63rem] font-mono uppercase tracking-[0.16em] text-emerald-400/70">
                           {new Date(message.timestamp).toLocaleTimeString()}
                         </span>
                       )}
@@ -728,7 +749,7 @@ export default function Home() {
                           ? '>>> Live transcription: speak into the membrane'
                           : 'Type into the membrane...'
                       }
-                      className={`relative z-10 w-full rounded-full border px-4 py-2.5 text-[13px] shadow-sm outline-none transition-all ${
+                      className={`relative z-10 w-full rounded-full border px-4 py-2.5 text-[0.85rem] shadow-sm outline-none transition-all ${
                         isListening
                           ? 'border-emerald-400 bg-emerald-900/80 text-emerald-50 placeholder-emerald-200/70 font-mono'
                           : 'border-emerald-500/40 bg-slate-950/80 text-emerald-50 placeholder-emerald-200/50 focus:border-emerald-300 focus:bg-emerald-900/70'
@@ -770,63 +791,67 @@ export default function Home() {
       <style jsx global>{`
         @keyframes slimePulse {
           0% {
-            transform: scale(0.85) translate3d(0, 0, 0);
-            opacity: 0.3;
+            transform: scale(0.7) translate3d(0, 4%, 0);
+            opacity: 0.25;
           }
-          50% {
-            transform: scale(1.25) translate3d(4%, -3%, 0);
-            opacity: 0.75;
+          40% {
+            transform: scale(1.25) translate3d(6%, -4%, 0);
+            opacity: 0.72;
+          }
+          75% {
+            transform: scale(1.4) translate3d(10%, -8%, 0);
+            opacity: 0.85;
           }
           100% {
-            transform: scale(0.85) translate3d(0, 0, 0);
-            opacity: 0.3;
+            transform: scale(0.7) translate3d(0, 4%, 0);
+            opacity: 0.25;
           }
         }
 
         @keyframes slimeCreep {
           0% {
-            transform: scale(0.9) translate3d(6%, 4%, 0);
-            opacity: 0.18;
+            transform: scale(0.8) translate3d(8%, 6%, 0);
+            opacity: 0.2;
           }
           33% {
-            transform: scale(1.15) translate3d(-4%, 0%, 0);
-            opacity: 0.32;
+            transform: scale(1.25) translate3d(-4%, 2%, 0);
+            opacity: 0.4;
           }
           66% {
-            transform: scale(1.25) translate3d(-8%, -6%, 0);
-            opacity: 0.38;
+            transform: scale(1.45) translate3d(-10%, -8%, 0);
+            opacity: 0.5;
           }
           100% {
-            transform: scale(0.9) translate3d(6%, 4%, 0);
-            opacity: 0.18;
+            transform: scale(0.8) translate3d(8%, 6%, 0);
+            opacity: 0.2;
           }
         }
 
         @keyframes slimeVein {
           0% {
-            transform: scale(0.8) translate3d(-4%, 2%, 0);
-            opacity: 0.16;
+            transform: scale(0.75) translate3d(-6%, 4%, 0);
+            opacity: 0.22;
           }
           50% {
-            transform: scale(1.3) translate3d(2%, -4%, 0);
-            opacity: 0.3;
+            transform: scale(1.4) translate3d(4%, -6%, 0);
+            opacity: 0.45;
           }
           100% {
-            transform: scale(0.8) translate3d(-4%, 2%, 0);
-            opacity: 0.16;
+            transform: scale(0.75) translate3d(-6%, 4%, 0);
+            opacity: 0.22;
           }
         }
 
         .slime-pulse {
-          animation: slimePulse 42s ease-in-out infinite;
+          animation: slimePulse 26s ease-in-out infinite;
         }
 
         .slime-creep {
-          animation: slimeCreep 60s ease-in-out infinite;
+          animation: slimeCreep 32s ease-in-out infinite;
         }
 
         .slime-vein {
-          animation: slimeVein 52s ease-in-out infinite;
+          animation: slimeVein 28s ease-in-out infinite;
         }
       `}</style>
     </>
