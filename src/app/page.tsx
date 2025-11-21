@@ -441,15 +441,14 @@ export default function Home() {
   return (
     <>
       <div
-        className="relative overflow-x-hidden bg-slate-950 text-emerald-50"
+        className="relative min-h-screen overflow-x-hidden bg-slate-950 text-emerald-50"
         style={{
           fontFamily:
             'system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif',
         }}
       >
-        {/* Slime mold background organisms */}
-        <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-          {/* Original pulsing blobs */}
+        {/* Animated slime mold background */}
+        <div className="pointer-events-none absolute inset-0 z-0">
           <div className="slime-pulse absolute -left-40 top-8 h-[22rem] w-[22rem] rounded-[55%_45%_60%_40%] bg-emerald-500/30 blur-3xl" />
           <div className="slime-creep absolute right-[-20%] top-1/3 h-[26rem] w-[30rem] rounded-[40%_60%_55%_45%] bg-lime-400/24 blur-3xl" />
           <div className="slime-vein absolute bottom-[-12%] left-1/4 h-[20rem] w-[24rem] rounded-[60%_40%_55%_45%] bg-emerald-300/24 blur-3xl" />
@@ -463,7 +462,7 @@ export default function Home() {
           <div className="slime-grow-6 absolute left-[5%] bottom-[15%] h-48 w-48 rounded-[50%_50%_60%_40%] bg-emerald-300/14 blur-3xl" />
         </div>
 
-        <div className="relative z-10 mx-auto flex flex-col px-4 py-6 sm:px-6 lg:px-8 max-w-5xl">
+        <div className="relative z-10 mx-auto flex min-h-screen max-w-5xl flex-col px-4 py-8 sm:px-6 lg:px-8">
           <header className="mb-4 flex flex-col gap-2 text-emerald-100/80">
             <span className="inline-flex items-center gap-2 self-start rounded-full border border-emerald-400/40 bg-emerald-900/40 px-3 py-1 text-xs font-mono uppercase tracking-[0.2em] text-emerald-200/80 shadow-[0_0_20px_rgba(16,185,129,0.35)]">
               <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.9)]"></span>
@@ -503,7 +502,7 @@ export default function Home() {
           </header>
 
           <div className="mt-3 rounded-3xl border border-emerald-500/30 bg-emerald-900/20 shadow-[0_0_60px_rgba(6,95,70,0.6)] backdrop-blur-xl">
-            <div className="flex h-[600px] flex-col overflow-hidden rounded-3xl">
+            <div className="flex min-h-[420px] max-h-[72vh] flex-col overflow-hidden rounded-3xl">
               <div className="border-b border-emerald-500/30 bg-gradient-to-r from-emerald-950/70 via-slate-950/70 to-emerald-950/70 px-4 py-3 shadow-[0_12px_40px_rgba(15,118,110,0.45)]">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div className="space-y-1">
