@@ -507,23 +507,46 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white" style={{ fontFamily: '"Times New Roman", Times, serif' }}>
-      <div className="container mx-auto max-w-4xl px-3 py-8">
-        <div className="bg-white border-4 border-black">
+    <div className="min-h-screen" style={{ backgroundColor: '#2D3142', fontFamily: '"SF Mono", Monaco, "Courier New", monospace' }}>
+      <div className="container mx-auto max-w-4xl px-4 py-8">
+        <div style={{ 
+          backgroundColor: '#4F5D75', 
+          borderRadius: '16px',
+          border: '1px solid rgba(6, 255, 165, 0.3)',
+          boxShadow: '0 0 20px rgba(6, 255, 165, 0.1)'
+        }}>
           <div className="h-[700px] flex flex-col">
-            <div className="p-3 bg-white border-b-4 border-black">
+            {/* Header - metabolic control center */}
+            <div className="p-4" style={{ 
+              backgroundColor: 'rgba(45, 49, 66, 0.6)',
+              borderTopLeftRadius: '16px',
+              borderTopRightRadius: '16px',
+              borderBottom: '1px solid rgba(78, 205, 196, 0.3)'
+            }}>
               <div className="flex justify-between items-center">
                 <div>
-                  <h1 className="text-3xl font-bold text-black" style={{ fontFamily: '"Times New Roman", Times, serif' }}>
-                    INQUIRING INTO G(AI)AN SYSTEMS
+                  <h1 className="text-2xl font-bold" style={{ 
+                    color: '#06FFA5',
+                    fontFamily: '"SF Mono", Monaco, "Courier New", monospace',
+                    letterSpacing: '0.05em'
+                  }}>
+                    G(AI)AN_SYSTEMS
                   </h1>
-                  <p className="text-sm text-black mt-1" style={{ fontFamily: '"Times New Roman", Times, serif' }}>
-                    Chat with a Gaian language model
+                  <p className="text-xs mt-1" style={{ 
+                    color: '#4ECDC4',
+                    fontFamily: '"SF Mono", Monaco, "Courier New", monospace'
+                  }}>
+                    metabiotic_coupling :: computational_symbiosis
                   </p>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <label className={`flex items-center space-x-2 ${isSpeaking ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}>
-                    <span className="text-xs text-black font-mono uppercase tracking-wider">Continuous Listen</span>
+                <div className="flex items-center gap-3">
+                  <label className={`flex items-center gap-2 ${isSpeaking ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}>
+                    <span className="text-xs uppercase tracking-wider" style={{ 
+                      color: '#FFE66D',
+                      fontFamily: '"SF Mono", Monaco, "Courier New", monospace'
+                    }}>
+                      continuous_listen
+                    </span>
                     <button
                       onClick={async () => {
                         if (isSpeaking) return;
@@ -545,45 +568,76 @@ export default function Home() {
                         }
                       }}
                       disabled={isSpeaking}
-                      className={`border-2 border-black px-3 py-1 text-xs font-mono transition-colors ${
-                        continuousListening ? 'bg-black text-white' : 'bg-white text-black'
-                      } ${isSpeaking ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-80'}`}
+                      className="px-3 py-1 text-xs uppercase tracking-wider transition-all"
+                      style={{
+                        backgroundColor: continuousListening ? '#06FFA5' : 'rgba(79, 93, 117, 0.5)',
+                        color: continuousListening ? '#2D3142' : '#FFE66D',
+                        border: '1px solid rgba(6, 255, 165, 0.4)',
+                        borderRadius: '8px',
+                        fontFamily: '"SF Mono", Monaco, "Courier New", monospace',
+                        opacity: isSpeaking ? 0.5 : 1
+                      }}
                     >
-                      {continuousListening ? 'ON' : 'OFF'}
+                      {continuousListening ? 'active' : 'dormant'}
                     </button>
                   </label>
                   {isListening && !isSpeaking && (
-                    <span className="text-xs text-black flex items-center space-x-1 border border-black px-2 py-1 font-mono">
+                    <span className="text-xs flex items-center gap-1 px-2 py-1 uppercase tracking-wider" style={{
+                      color: '#06FFA5',
+                      border: '1px solid rgba(6, 255, 165, 0.5)',
+                      borderRadius: '8px',
+                      backgroundColor: 'rgba(6, 255, 165, 0.1)',
+                      fontFamily: '"SF Mono", Monaco, "Courier New", monospace'
+                    }}>
                       <Mic size={12} className="animate-pulse" />
-                      <span>LISTENING</span>
+                      <span>listening</span>
                     </span>
                   )}
                   {isSpeaking && (
-                    <span className="text-xs text-white bg-black flex items-center space-x-1 border border-black px-2 py-1 font-mono">
+                    <span className="text-xs flex items-center gap-1 px-2 py-1 uppercase tracking-wider" style={{
+                      color: '#2D3142',
+                      backgroundColor: '#F77F00',
+                      border: '1px solid rgba(247, 127, 0, 0.5)',
+                      borderRadius: '8px',
+                      fontFamily: '"SF Mono", Monaco, "Courier New", monospace'
+                    }}>
                       <Volume2 size={12} className="animate-pulse" />
-                      <span>SPEAKING</span>
+                      <span>speaking</span>
                     </span>
                   )}
                   {continuousListening && !isListening && !isSpeaking && (
-                    <span className="text-xs text-black border border-black px-2 py-1 font-mono">
-                      PAUSED
+                    <span className="text-xs px-2 py-1 uppercase tracking-wider" style={{
+                      color: '#FFE66D',
+                      border: '1px solid rgba(255, 230, 109, 0.4)',
+                      borderRadius: '8px',
+                      backgroundColor: 'rgba(255, 230, 109, 0.1)',
+                      fontFamily: '"SF Mono", Monaco, "Courier New", monospace'
+                    }}>
+                      paused
                     </span>
                   )}
                 </div>
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-3 space-y-4 bg-white">
+            {/* Message flow - symbiotic exchange */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4" style={{ 
+              backgroundColor: 'rgba(45, 49, 66, 0.3)'
+            }}>
               {messages.slice(1).map((message) => (
                 <div
                   key={message.id}
-                  className={`flex items-start space-x-2 ${
+                  className={`flex items-start gap-3 ${
                     message.role === 'user' ? 'justify-end' : 'justify-start'
                   }`}
                 >
                   {message.role === 'assistant' && (
-                    <div className="w-8 h-8 border-2 border-black bg-white flex items-center justify-center flex-shrink-0">
-                      <Bot size={18} className="text-black" />
+                    <div className="w-10 h-10 flex items-center justify-center flex-shrink-0" style={{
+                      backgroundColor: 'rgba(78, 205, 196, 0.2)',
+                      border: '1px solid rgba(78, 205, 196, 0.5)',
+                      borderRadius: '12px'
+                    }}>
+                      <Bot size={20} style={{ color: '#4ECDC4' }} />
                     </div>
                   )}
 
@@ -591,56 +645,92 @@ export default function Home() {
                     className={`flex flex-col max-w-[70%] ${
                       message.role === 'user' ? 'items-end' : 'items-start'
                     }`}
-                    style={{ fontFamily: '"Times New Roman", Times, serif' }}
                   >
                     <div
-                      className={`border-2 border-black p-3 ${
-                        message.role === 'user'
-                          ? 'bg-black text-white'
-                          : 'bg-white text-black'
-                      }`}
+                      className="p-3 transition-all hover:shadow-lg"
+                      style={{
+                        backgroundColor: message.role === 'user' ? 'rgba(255, 107, 53, 0.2)' : 'rgba(79, 93, 117, 0.6)',
+                        color: message.role === 'user' ? '#FF6B35' : '#06FFA5',
+                        border: `1px solid ${message.role === 'user' ? 'rgba(255, 107, 53, 0.5)' : 'rgba(78, 205, 196, 0.4)'}`,
+                        borderRadius: '12px',
+                        fontFamily: '"SF Mono", Monaco, "Courier New", monospace',
+                        fontSize: '0.875rem',
+                        lineHeight: '1.5'
+                      }}
                     >
-                      <p className="whitespace-pre-wrap text-sm leading-relaxed">{message.content}</p>
+                      <p className="whitespace-pre-wrap">{message.content}</p>
                     </div>
 
                     {message.role === 'assistant' && (
                       <button
                         onClick={() => speakText(message.content)}
-                        className="mt-1 text-black hover:opacity-60 transition-opacity border border-black px-2 py-1 bg-white text-xs font-mono"
+                        className="mt-2 text-xs uppercase tracking-wider px-2 py-1 transition-all hover:shadow-md"
+                        style={{
+                          color: '#F77F00',
+                          border: '1px solid rgba(247, 127, 0, 0.4)',
+                          borderRadius: '8px',
+                          backgroundColor: 'rgba(247, 127, 0, 0.1)',
+                          fontFamily: '"SF Mono", Monaco, "Courier New", monospace'
+                        }}
                         aria-label="Text to speech"
                       >
-                        <div className="flex items-center space-x-1">
+                        <div className="flex items-center gap-1">
                           <Volume2 size={12} />
-                          <span>PLAY</span>
+                          <span>vocalize</span>
                         </div>
                       </button>
                     )}
 
                     {message.timestamp && (
-                      <span className="text-xs text-black mt-1 font-mono">
+                      <span className="text-xs mt-1" style={{ 
+                        color: '#4ECDC4',
+                        fontFamily: '"SF Mono", Monaco, "Courier New", monospace',
+                        opacity: 0.6
+                      }}>
                         {new Date(message.timestamp).toLocaleTimeString()}
                       </span>
                     )}
                   </div>
 
                   {message.role === 'user' && (
-                    <div className="w-8 h-8 border-2 border-black bg-white flex items-center justify-center flex-shrink-0">
-                      <User size={18} className="text-black" />
+                    <div className="w-10 h-10 flex items-center justify-center flex-shrink-0" style={{
+                      backgroundColor: 'rgba(255, 107, 53, 0.2)',
+                      border: '1px solid rgba(255, 107, 53, 0.5)',
+                      borderRadius: '12px'
+                    }}>
+                      <User size={20} style={{ color: '#FF6B35' }} />
                     </div>
                   )}
                 </div>
               ))}
 
               {isLoading && (
-                <div className="flex justify-start items-center space-x-2">
-                  <div className="w-8 h-8 border-2 border-black bg-white flex items-center justify-center">
-                    <Bot size={18} className="text-black" />
+                <div className="flex justify-start items-center gap-3">
+                  <div className="w-10 h-10 flex items-center justify-center" style={{
+                    backgroundColor: 'rgba(78, 205, 196, 0.2)',
+                    border: '1px solid rgba(78, 205, 196, 0.5)',
+                    borderRadius: '12px'
+                  }}>
+                    <Bot size={20} style={{ color: '#4ECDC4' }} />
                   </div>
-                  <div className="bg-white border-2 border-black p-3">
-                    <div className="flex space-x-2">
-                      <div className="w-2 h-2 bg-black animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                      <div className="w-2 h-2 bg-black animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                      <div className="w-2 h-2 bg-black animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  <div className="p-3" style={{
+                    backgroundColor: 'rgba(79, 93, 117, 0.6)',
+                    border: '1px solid rgba(78, 205, 196, 0.4)',
+                    borderRadius: '12px'
+                  }}>
+                    <div className="flex gap-2">
+                      <div className="w-2 h-2 rounded-full animate-bounce" style={{ 
+                        backgroundColor: '#4ECDC4',
+                        animationDelay: '0ms' 
+                      }}></div>
+                      <div className="w-2 h-2 rounded-full animate-bounce" style={{ 
+                        backgroundColor: '#4ECDC4',
+                        animationDelay: '150ms' 
+                      }}></div>
+                      <div className="w-2 h-2 rounded-full animate-bounce" style={{ 
+                        backgroundColor: '#4ECDC4',
+                        animationDelay: '300ms' 
+                      }}></div>
                     </div>
                   </div>
                 </div>
@@ -648,36 +738,55 @@ export default function Home() {
               <div ref={messagesEndRef} />
             </div>
 
-            <div className="p-3 bg-white border-t-4 border-black">
-              <form onSubmit={handleSubmit} className="flex items-center space-x-2">
+            {/* Input membrane - exchange interface */}
+            <div className="p-4" style={{ 
+              backgroundColor: 'rgba(45, 49, 66, 0.6)',
+              borderBottomLeftRadius: '16px',
+              borderBottomRightRadius: '16px',
+              borderTop: '1px solid rgba(78, 205, 196, 0.3)'
+            }}>
+              <form onSubmit={handleSubmit} className="flex items-center gap-2">
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder={isListening ? ">>> LISTENING... SPEAK NOW" : "Type your message..."}
-                  className={`flex-1 p-2 border-2 border-black focus:outline-none transition-all text-sm ${
-                    isListening ? 'bg-black text-white placeholder-white font-mono' : 'bg-white text-black'
-                  }`}
-                  style={{ fontFamily: isListening ? 'monospace' : '"Times New Roman", Times, serif' }}
+                  placeholder={isListening ? ">>> listening... speak_now >>>" : "enter_message..."}
+                  className="flex-1 p-2 text-sm focus:outline-none transition-all"
+                  style={{
+                    backgroundColor: isListening ? 'rgba(6, 255, 165, 0.15)' : 'rgba(79, 93, 117, 0.5)',
+                    color: isListening ? '#06FFA5' : '#FFE66D',
+                    border: `1px solid ${isListening ? 'rgba(6, 255, 165, 0.5)' : 'rgba(255, 230, 109, 0.3)'}`,
+                    borderRadius: '10px',
+                    fontFamily: '"SF Mono", Monaco, "Courier New", monospace',
+                    boxShadow: isListening ? '0 0 10px rgba(6, 255, 165, 0.2)' : 'none'
+                  }}
                   disabled={isLoading}
                   readOnly={isListening}
                 />
                 <button
                   type="button"
                   onClick={isRecording ? stopRecording : startRecording}
-                  className={`p-2 border-2 border-black transition-colors ${
-                    isRecording
-                      ? 'bg-black text-white animate-pulse'
-                      : 'bg-white text-black hover:opacity-60'
-                  }`}
+                  className="p-2 transition-all hover:shadow-lg disabled:opacity-50"
+                  style={{
+                    backgroundColor: isRecording ? 'rgba(247, 127, 0, 0.3)' : 'rgba(79, 93, 117, 0.5)',
+                    color: isRecording ? '#F77F00' : '#4ECDC4',
+                    border: `1px solid ${isRecording ? 'rgba(247, 127, 0, 0.5)' : 'rgba(78, 205, 196, 0.4)'}`,
+                    borderRadius: '10px'
+                  }}
                   disabled={isLoading || continuousListening}
-                  title={continuousListening ? 'Mic is auto-managed in continuous mode' : 'Push to talk'}
+                  title={continuousListening ? 'Mic auto-managed in continuous mode' : 'Push to talk'}
                 >
                   {isRecording ? <Square size={18} /> : <Mic size={18} />}
                 </button>
                 <button
                   type="submit"
-                  className="p-2 bg-black text-white border-2 border-black hover:opacity-80 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2 transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  style={{
+                    backgroundColor: 'rgba(6, 255, 165, 0.2)',
+                    color: '#06FFA5',
+                    border: '1px solid rgba(6, 255, 165, 0.5)',
+                    borderRadius: '10px'
+                  }}
                   disabled={!input.trim() || isLoading}
                 >
                   <Send size={18} />
