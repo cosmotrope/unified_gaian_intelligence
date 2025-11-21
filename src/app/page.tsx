@@ -26,7 +26,7 @@ export default function Home() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [continuousListening, setContinuousListening] = useState(false);
   const [isListening, setIsListening] = useState(false);
-  const [textScale, setTextScale] = useState<number>(1.05); // slightly larger default
+  const [textScale, setTextScale] = useState<number>(1.15); // larger default
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -352,7 +352,7 @@ export default function Home() {
     try {
       console.log('Sending text to speech API:', text);
 
-      // Stop speech recognition while AI speaks
+      // Stop speech recognition while AI is speaking
       if (isListening) {
         stopSpeechRecognition();
       }
@@ -512,21 +512,23 @@ export default function Home() {
   return (
     <>
       <div
-        className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-emerald-950 text-emerald-50"
+        className="relative min-h-screen overflow-x-hidden bg-slate-950 text-emerald-50"
         style={{
           fontFamily:
             'system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif',
         }}
       >
-        {/* Slime-mold background layer */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="slime-pulse absolute -left-40 top-10 h-96 w-96 rounded-full bg-emerald-500/30 blur-3xl" />
-          <div className="slime-creep absolute right-[-15%] top-1/3 h-[26rem] w-[26rem] rounded-full bg-lime-400/26 blur-3xl" />
-          <div className="slime-vein absolute bottom-[-8%] left-1/4 h-80 w-80 rounded-full bg-emerald-300/24 blur-3xl" />
+        {/* Animated slime-mold-esque background (behind everything) */}
+        <div className="pointer-events-none absolute inset-0 z-0">
+          <div className="slime-pulse absolute -left-40 top-8 h-[22rem] w-[22rem] rounded-[55%_45%_60%_40%] bg-emerald-500/30 blur-3xl" />
+          <div className="slime-creep absolute right-[-20%] top-1/3 h-[26rem] w-[30rem] rounded-[40%_60%_55%_45%] bg-lime-400/24 blur-3xl" />
+          <div className="slime-vein absolute bottom-[-12%] left-1/4 h-[20rem] w-[24rem] rounded-[60%_40%_55%_45%] bg-emerald-300/24 blur-3xl" />
         </div>
 
-        <div className="relative mx-auto flex min-h-screen max-w-5xl flex-col px-4 py-8 sm:px-6 lg:px-8">
-          <div className="mb-6 flex flex-col gap-2 text-emerald-100/80">
+        {/* Foreground content */}
+        <div className="relative z-10 mx-auto flex min-h-screen max-w-5xl flex-col px-4 py-8 sm:px-6 lg:px-8">
+          {/* Header + slider */}
+          <header className="mb-4 flex flex-col gap-2 text-emerald-100/80">
             <span className="inline-flex items-center gap-2 self-start rounded-full border border-emerald-400/40 bg-emerald-900/40 px-3 py-1 text-xs font-mono uppercase tracking-[0.2em] text-emerald-200/80 shadow-[0_0_20px_rgba(16,185,129,0.35)]">
               <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.9)]"></span>
               Metabiotic Interface • G(ai)an Systems
@@ -536,17 +538,40 @@ export default function Home() {
                 Inquiring into G(ai)an Systems
               </span>
             </h1>
-            <p className="max-w-2xl text-sm text-emerald-100/70">
+            <p className="max-w-2xl text-sm text-emerald-100/75">
               Dialogue with a Gaian language model tuned to symbiosis, autopoiesis, and planetary regulation.
             </p>
-          </div>
 
-          {/* Chat container, flexing without huge empty bottom space */}
+            <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px]">
+              <div className="flex items-center gap-2 rounded-full bg-slate-950/70 px-3 py-1">
+                <span className="font-mono uppercase tracking-[0.18em] text-emerald-300/90">
+                  Text Size
+                </span>
+                <input
+                  type="range"
+                  min={0.9}
+                  max={1.6}
+                  step={0.05}
+                  value={textScale}
+                  onChange={(e) => setTextScale(parseFloat(e.target.value))}
+                  className="h-1 w-28 cursor-pointer appearance-none rounded-full bg-emerald-800/70 accent-emerald-400"
+                />
+                <span className="tabular-nums text-xs text-emerald-200/80">
+                  {Math.round(textScale * 100)}%
+                </span>
+              </div>
+              <span className="text-[10px] text-emerald-200/70">
+                Adjusts message text and input field size.
+              </span>
+            </div>
+          </header>
+
+          {/* Chat card (no fixed 700px height, so no massive empty bottom) */}
           <div
-            className="flex-1 rounded-3xl border border-emerald-500/30 bg-emerald-900/20 shadow-[0_0_60px_rgba(6,95,70,0.6)] backdrop-blur-xl"
+            className="mt-3 rounded-3xl border border-emerald-500/30 bg-emerald-900/20 shadow-[0_0_60px_rgba(6,95,70,0.6)] backdrop-blur-xl"
             style={{ fontSize: `${textScale}rem` }}
           >
-            <div className="flex min-h-[420px] flex-col overflow-hidden rounded-3xl">
+            <div className="flex min-h-[420px] max-h-[72vh] flex-col overflow-hidden rounded-3xl">
               {/* Top control membrane */}
               <div className="border-b border-emerald-500/30 bg-gradient-to-r from-emerald-950/70 via-slate-950/70 to-emerald-950/70 px-4 py-3 shadow-[0_12px_40px_rgba(15,118,110,0.45)]">
                 <div className="flex flex-wrap items-center justify-between gap-4">
@@ -560,22 +585,6 @@ export default function Home() {
                   </div>
 
                   <div className="flex flex-wrap items-center gap-3">
-                    {/* Text size slider */}
-                    <div className="flex items-center gap-2 rounded-full bg-slate-950/60 px-2 py-1">
-                      <span className="hidden text-[10px] font-mono uppercase tracking-[0.18em] text-emerald-300/90 sm:inline">
-                        Text Size
-                      </span>
-                      <input
-                        type="range"
-                        min={0.9}
-                        max={1.4}
-                        step={0.05}
-                        value={textScale}
-                        onChange={(e) => setTextScale(parseFloat(e.target.value))}
-                        className="h-1 w-24 cursor-pointer appearance-none rounded-full bg-emerald-800/70 accent-emerald-400"
-                      />
-                    </div>
-
                     <label
                       className={`group flex items-center gap-2 rounded-full border px-2 py-1 text-[10px] font-mono uppercase tracking-[0.18em] ${
                         isSpeaking
@@ -680,13 +689,13 @@ export default function Home() {
                         {message.role === 'assistant' && (
                           <div className="pointer-events-none absolute -left-2 top-3 h-4 w-4 rounded-full bg-emerald-400/40 blur-md" />
                         )}
-                        <p className="whitespace-pre-wrap text-[0.82rem]">{message.content}</p>
+                        <p className="whitespace-pre-wrap text-[0.86rem]">{message.content}</p>
                       </div>
 
                       {message.role === 'assistant' && (
                         <button
                           onClick={() => speakText(message.content)}
-                          className="mt-1 inline-flex items-center gap-1 rounded-full border border-emerald-500/40 bg-slate-950/70 px-2 py-1 text-[0.65rem] font-mono uppercase tracking-[0.18em] text-emerald-200/90 transition-colors hover:border-emerald-300 hover:bg-emerald-900/70"
+                          className="mt-1 inline-flex items-center gap-1 rounded-full border border-emerald-500/40 bg-slate-950/70 px-2 py-1 text-[0.68rem] font-mono uppercase tracking-[0.18em] text-emerald-200/90 transition-colors hover:border-emerald-300 hover:bg-emerald-900/70"
                           aria-label="Text to speech"
                         >
                           <Volume2 size={11} />
@@ -695,7 +704,7 @@ export default function Home() {
                       )}
 
                       {message.timestamp && (
-                        <span className="mt-1 text-[0.63rem] font-mono uppercase tracking-[0.16em] text-emerald-400/70">
+                        <span className="mt-1 text-[0.66rem] font-mono uppercase tracking-[0.16em] text-emerald-400/70">
                           {new Date(message.timestamp).toLocaleTimeString()}
                         </span>
                       )}
@@ -749,7 +758,7 @@ export default function Home() {
                           ? '>>> Live transcription: speak into the membrane'
                           : 'Type into the membrane...'
                       }
-                      className={`relative z-10 w-full rounded-full border px-4 py-2.5 text-[0.85rem] shadow-sm outline-none transition-all ${
+                      className={`relative z-10 w-full rounded-full border px-4 py-2.5 text-[0.9rem] shadow-sm outline-none transition-all ${
                         isListening
                           ? 'border-emerald-400 bg-emerald-900/80 text-emerald-50 placeholder-emerald-200/70 font-mono'
                           : 'border-emerald-500/40 bg-slate-950/80 text-emerald-50 placeholder-emerald-200/50 focus:border-emerald-300 focus:bg-emerald-900/70'
@@ -787,71 +796,77 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Slime-mold animation keyframes */}
+      {/* Slime-mold animation keyframes, only applied to background blobs */}
       <style jsx global>{`
         @keyframes slimePulse {
           0% {
-            transform: scale(0.7) translate3d(0, 4%, 0);
-            opacity: 0.25;
+            transform: scale(0.7) translate3d(0, 3%, 0) rotate(0deg);
+            opacity: 0.2;
           }
           40% {
-            transform: scale(1.25) translate3d(6%, -4%, 0);
-            opacity: 0.72;
+            transform: scale(1.3) translate3d(6%, -4%, 0) rotate(8deg);
+            opacity: 0.7;
           }
           75% {
-            transform: scale(1.4) translate3d(10%, -8%, 0);
+            transform: scale(1.45) translate3d(10%, -6%, 0) rotate(-5deg);
             opacity: 0.85;
           }
           100% {
-            transform: scale(0.7) translate3d(0, 4%, 0);
-            opacity: 0.25;
+            transform: scale(0.7) translate3d(0, 3%, 0) rotate(0deg);
+            opacity: 0.2;
           }
         }
 
         @keyframes slimeCreep {
           0% {
-            transform: scale(0.8) translate3d(8%, 6%, 0);
-            opacity: 0.2;
+            transform: scale(0.8) translate3d(10%, 8%, 0) rotate(-6deg);
+            opacity: 0.18;
           }
           33% {
-            transform: scale(1.25) translate3d(-4%, 2%, 0);
+            transform: scale(1.25) translate3d(-4%, 3%, 0) rotate(4deg);
             opacity: 0.4;
           }
           66% {
-            transform: scale(1.45) translate3d(-10%, -8%, 0);
-            opacity: 0.5;
+            transform: scale(1.5) translate3d(-10%, -8%, 0) rotate(-2deg);
+            opacity: 0.55;
           }
           100% {
-            transform: scale(0.8) translate3d(8%, 6%, 0);
-            opacity: 0.2;
+            transform: scale(0.8) translate3d(10%, 8%, 0) rotate(-6deg);
+            opacity: 0.18;
           }
         }
 
         @keyframes slimeVein {
           0% {
-            transform: scale(0.75) translate3d(-6%, 4%, 0);
-            opacity: 0.22;
+            transform: scale(0.75) translate3d(-6%, 4%, 0) rotate(3deg);
+            opacity: 0.2;
           }
           50% {
-            transform: scale(1.4) translate3d(4%, -6%, 0);
+            transform: scale(1.4) translate3d(4%, -6%, 0) rotate(-4deg);
             opacity: 0.45;
           }
           100% {
-            transform: scale(0.75) translate3d(-6%, 4%, 0);
-            opacity: 0.22;
+            transform: scale(0.75) translate3d(-6%, 4%, 0) rotate(3deg);
+            opacity: 0.2;
           }
         }
 
+        .slime-pulse,
+        .slime-creep,
+        .slime-vein {
+          will-change: transform, opacity;
+        }
+
         .slime-pulse {
-          animation: slimePulse 26s ease-in-out infinite;
+          animation: slimePulse 28s ease-in-out infinite;
         }
 
         .slime-creep {
-          animation: slimeCreep 32s ease-in-out infinite;
+          animation: slimeCreep 36s ease-in-out infinite;
         }
 
         .slime-vein {
-          animation: slimeVein 28s ease-in-out infinite;
+          animation: slimeVein 32s ease-in-out infinite;
         }
       `}</style>
     </>
