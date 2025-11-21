@@ -440,6 +440,65 @@ export default function Home() {
 
   return (
     <>
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes slimePulse {
+          0% { transform: scale(0.7) translate3d(0, 3%, 0) rotate(0deg); opacity: 0.2; }
+          40% { transform: scale(1.3) translate3d(6%, -4%, 0) rotate(8deg); opacity: 0.7; }
+          75% { transform: scale(1.45) translate3d(10%, -6%, 0) rotate(-5deg); opacity: 0.85; }
+          100% { transform: scale(0.7) translate3d(0, 3%, 0) rotate(0deg); opacity: 0.2; }
+        }
+        @keyframes slimeCreep {
+          0% { transform: scale(0.8) translate3d(10%, 8%, 0) rotate(-6deg); opacity: 0.18; }
+          33% { transform: scale(1.25) translate3d(-4%, 3%, 0) rotate(4deg); opacity: 0.4; }
+          66% { transform: scale(1.5) translate3d(-10%, -8%, 0) rotate(-2deg); opacity: 0.55; }
+          100% { transform: scale(0.8) translate3d(10%, 8%, 0) rotate(-6deg); opacity: 0.18; }
+        }
+        @keyframes slimeVein {
+          0% { transform: scale(0.75) translate3d(-6%, 4%, 0) rotate(3deg); opacity: 0.2; }
+          50% { transform: scale(1.4) translate3d(4%, -6%, 0) rotate(-4deg); opacity: 0.45; }
+          100% { transform: scale(0.75) translate3d(-6%, 4%, 0) rotate(3deg); opacity: 0.2; }
+        }
+        @keyframes slimeGrow1 {
+          0% { transform: scale(0.6) rotate(0deg); border-radius: 60% 40% 30% 70%; opacity: 0.15; }
+          50% { transform: scale(1.8) rotate(180deg); border-radius: 40% 60% 70% 30%; opacity: 0.35; }
+          100% { transform: scale(0.6) rotate(360deg); border-radius: 60% 40% 30% 70%; opacity: 0.15; }
+        }
+        @keyframes slimeGrow2 {
+          0% { transform: scale(0.7) rotate(0deg); border-radius: 45% 55% 60% 40%; opacity: 0.12; }
+          50% { transform: scale(2.0) rotate(-160deg); border-radius: 70% 30% 40% 60%; opacity: 0.3; }
+          100% { transform: scale(0.7) rotate(-320deg); border-radius: 45% 55% 60% 40%; opacity: 0.12; }
+        }
+        @keyframes slimeGrow3 {
+          0% { transform: scale(0.65) rotate(0deg); border-radius: 70% 30% 50% 50%; opacity: 0.14; }
+          50% { transform: scale(1.9) rotate(170deg); border-radius: 30% 70% 50% 50%; opacity: 0.32; }
+          100% { transform: scale(0.65) rotate(340deg); border-radius: 70% 30% 50% 50%; opacity: 0.14; }
+        }
+        @keyframes slimeGrow4 {
+          0% { transform: scale(0.75) rotate(0deg); border-radius: 55% 45% 40% 60%; opacity: 0.18; }
+          50% { transform: scale(2.1) rotate(-150deg); border-radius: 65% 35% 55% 45%; opacity: 0.38; }
+          100% { transform: scale(0.75) rotate(-300deg); border-radius: 55% 45% 40% 60%; opacity: 0.18; }
+        }
+        @keyframes slimeGrow5 {
+          0% { transform: scale(0.6) rotate(0deg); border-radius: 65% 35% 55% 45%; opacity: 0.13; }
+          50% { transform: scale(1.7) rotate(190deg); border-radius: 35% 65% 45% 55%; opacity: 0.28; }
+          100% { transform: scale(0.6) rotate(380deg); border-radius: 65% 35% 55% 45%; opacity: 0.13; }
+        }
+        @keyframes slimeGrow6 {
+          0% { transform: scale(0.7) rotate(0deg); border-radius: 50% 50% 60% 40%; opacity: 0.11; }
+          50% { transform: scale(2.2) rotate(-175deg); border-radius: 60% 40% 50% 50%; opacity: 0.26; }
+          100% { transform: scale(0.7) rotate(-350deg); border-radius: 50% 50% 60% 40%; opacity: 0.11; }
+        }
+        .slime-pulse { animation: slimePulse 28s ease-in-out infinite; will-change: transform, opacity; }
+        .slime-creep { animation: slimeCreep 36s ease-in-out infinite; will-change: transform, opacity; }
+        .slime-vein { animation: slimeVein 32s ease-in-out infinite; will-change: transform, opacity; }
+        .slime-grow-1 { animation: slimeGrow1 45s ease-in-out infinite; will-change: transform, border-radius, opacity; }
+        .slime-grow-2 { animation: slimeGrow2 52s ease-in-out infinite; will-change: transform, border-radius, opacity; }
+        .slime-grow-3 { animation: slimeGrow3 48s ease-in-out infinite; will-change: transform, border-radius, opacity; }
+        .slime-grow-4 { animation: slimeGrow4 55s ease-in-out infinite; will-change: transform, border-radius, opacity; }
+        .slime-grow-5 { animation: slimeGrow5 50s ease-in-out infinite; will-change: transform, border-radius, opacity; }
+        .slime-grow-6 { animation: slimeGrow6 58s ease-in-out infinite; will-change: transform, border-radius, opacity; }
+      `}} />
+      
       <div
         className="relative min-h-screen overflow-x-hidden bg-slate-950 text-emerald-50"
         style={{
@@ -448,7 +507,7 @@ export default function Home() {
         }}
       >
         {/* Animated slime mold background */}
-        <div className="pointer-events-none absolute inset-0 z-0">
+        <div className="pointer-events-none fixed inset-0 z-0">
           <div className="slime-pulse absolute -left-40 top-8 h-[22rem] w-[22rem] rounded-[55%_45%_60%_40%] bg-emerald-500/30 blur-3xl" />
           <div className="slime-creep absolute right-[-20%] top-1/3 h-[26rem] w-[30rem] rounded-[40%_60%_55%_45%] bg-lime-400/24 blur-3xl" />
           <div className="slime-vein absolute bottom-[-12%] left-1/4 h-[20rem] w-[24rem] rounded-[60%_40%_55%_45%] bg-emerald-300/24 blur-3xl" />
@@ -462,8 +521,8 @@ export default function Home() {
           <div className="slime-grow-6 absolute left-[5%] bottom-[15%] h-48 w-48 rounded-[50%_50%_60%_40%] bg-emerald-300/14 blur-3xl" />
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-screen max-w-5xl flex-col px-4 py-8 sm:px-6 lg:px-8">
-          <header className="mb-4 flex flex-col gap-2 text-emerald-100/80">
+        <div className="relative z-10 mx-auto flex flex-col px-4 py-4 sm:px-6 lg:px-8 max-w-5xl">
+          <header className="mb-3 flex flex-col gap-2 text-emerald-100/80">
             <span className="inline-flex items-center gap-2 self-start rounded-full border border-emerald-400/40 bg-emerald-900/40 px-3 py-1 text-xs font-mono uppercase tracking-[0.2em] text-emerald-200/80 shadow-[0_0_20px_rgba(16,185,129,0.35)]">
               <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.9)]"></span>
               Metabiotic Interface • G(ai)an Systems
@@ -501,8 +560,8 @@ export default function Home() {
             </div>
           </header>
 
-          <div className="mt-3 rounded-3xl border border-emerald-500/30 bg-emerald-900/20 shadow-[0_0_60px_rgba(6,95,70,0.6)] backdrop-blur-xl">
-            <div className="flex min-h-[420px] max-h-[72vh] flex-col overflow-hidden rounded-3xl">
+          <div className="mt-2 rounded-3xl border border-emerald-500/30 bg-emerald-900/20 shadow-[0_0_60px_rgba(6,95,70,0.6)] backdrop-blur-xl">
+            <div className="flex h-[500px] flex-col overflow-hidden rounded-3xl">
               <div className="border-b border-emerald-500/30 bg-gradient-to-r from-emerald-950/70 via-slate-950/70 to-emerald-950/70 px-4 py-3 shadow-[0_12px_40px_rgba(15,118,110,0.45)]">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div className="space-y-1">
@@ -725,217 +784,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-      <style jsx global>{`
-        @keyframes slimePulse {
-          0% {
-            transform: scale(0.7) translate3d(0, 3%, 0) rotate(0deg);
-            opacity: 0.2;
-          }
-          40% {
-            transform: scale(1.3) translate3d(6%, -4%, 0) rotate(8deg);
-            opacity: 0.7;
-          }
-          75% {
-            transform: scale(1.45) translate3d(10%, -6%, 0) rotate(-5deg);
-            opacity: 0.85;
-          }
-          100% {
-            transform: scale(0.7) translate3d(0, 3%, 0) rotate(0deg);
-            opacity: 0.2;
-          }
-        }
-
-        @keyframes slimeCreep {
-          0% {
-            transform: scale(0.8) translate3d(10%, 8%, 0) rotate(-6deg);
-            opacity: 0.18;
-          }
-          33% {
-            transform: scale(1.25) translate3d(-4%, 3%, 0) rotate(4deg);
-            opacity: 0.4;
-          }
-          66% {
-            transform: scale(1.5) translate3d(-10%, -8%, 0) rotate(-2deg);
-            opacity: 0.55;
-          }
-          100% {
-            transform: scale(0.8) translate3d(10%, 8%, 0) rotate(-6deg);
-            opacity: 0.18;
-          }
-        }
-
-        @keyframes slimeVein {
-          0% {
-            transform: scale(0.75) translate3d(-6%, 4%, 0) rotate(3deg);
-            opacity: 0.2;
-          }
-          50% {
-            transform: scale(1.4) translate3d(4%, -6%, 0) rotate(-4deg);
-            opacity: 0.45;
-          }
-          100% {
-            transform: scale(0.75) translate3d(-6%, 4%, 0) rotate(3deg);
-            opacity: 0.2;
-          }
-        }
-
-        @keyframes slimeGrow1 {
-          0% {
-            transform: scale(0.6) rotate(0deg);
-            border-radius: 60% 40% 30% 70%;
-            opacity: 0.15;
-          }
-          50% {
-            transform: scale(1.8) rotate(180deg);
-            border-radius: 40% 60% 70% 30%;
-            opacity: 0.35;
-          }
-          100% {
-            transform: scale(0.6) rotate(360deg);
-            border-radius: 60% 40% 30% 70%;
-            opacity: 0.15;
-          }
-        }
-
-        @keyframes slimeGrow2 {
-          0% {
-            transform: scale(0.7) rotate(0deg);
-            border-radius: 45% 55% 60% 40%;
-            opacity: 0.12;
-          }
-          50% {
-            transform: scale(2.0) rotate(-160deg);
-            border-radius: 70% 30% 40% 60%;
-            opacity: 0.3;
-          }
-          100% {
-            transform: scale(0.7) rotate(-320deg);
-            border-radius: 45% 55% 60% 40%;
-            opacity: 0.12;
-          }
-        }
-
-        @keyframes slimeGrow3 {
-          0% {
-            transform: scale(0.65) rotate(0deg);
-            border-radius: 70% 30% 50% 50%;
-            opacity: 0.14;
-          }
-          50% {
-            transform: scale(1.9) rotate(170deg);
-            border-radius: 30% 70% 50% 50%;
-            opacity: 0.32;
-          }
-          100% {
-            transform: scale(0.65) rotate(340deg);
-            border-radius: 70% 30% 50% 50%;
-            opacity: 0.14;
-          }
-        }
-
-        @keyframes slimeGrow4 {
-          0% {
-            transform: scale(0.75) rotate(0deg);
-            border-radius: 55% 45% 40% 60%;
-            opacity: 0.18;
-          }
-          50% {
-            transform: scale(2.1) rotate(-150deg);
-            border-radius: 65% 35% 55% 45%;
-            opacity: 0.38;
-          }
-          100% {
-            transform: scale(0.75) rotate(-300deg);
-            border-radius: 55% 45% 40% 60%;
-            opacity: 0.18;
-          }
-        }
-
-        @keyframes slimeGrow5 {
-          0% {
-            transform: scale(0.6) rotate(0deg);
-            border-radius: 65% 35% 55% 45%;
-            opacity: 0.13;
-          }
-          50% {
-            transform: scale(1.7) rotate(190deg);
-            border-radius: 35% 65% 45% 55%;
-            opacity: 0.28;
-          }
-          100% {
-            transform: scale(0.6) rotate(380deg);
-            border-radius: 65% 35% 55% 45%;
-            opacity: 0.13;
-          }
-        }
-
-        @keyframes slimeGrow6 {
-          0% {
-            transform: scale(0.7) rotate(0deg);
-            border-radius: 50% 50% 60% 40%;
-            opacity: 0.11;
-          }
-          50% {
-            transform: scale(2.2) rotate(-175deg);
-            border-radius: 60% 40% 50% 50%;
-            opacity: 0.26;
-          }
-          100% {
-            transform: scale(0.7) rotate(-350deg);
-            border-radius: 50% 50% 60% 40%;
-            opacity: 0.11;
-          }
-        }
-
-        .slime-pulse,
-        .slime-creep,
-        .slime-vein {
-          will-change: transform, opacity;
-        }
-
-        .slime-pulse {
-          animation: slimePulse 28s ease-in-out infinite;
-        }
-
-        .slime-creep {
-          animation: slimeCreep 36s ease-in-out infinite;
-        }
-
-        .slime-vein {
-          animation: slimeVein 32s ease-in-out infinite;
-        }
-
-        .slime-grow-1 {
-          animation: slimeGrow1 45s ease-in-out infinite;
-          will-change: transform, border-radius, opacity;
-        }
-
-        .slime-grow-2 {
-          animation: slimeGrow2 52s ease-in-out infinite;
-          will-change: transform, border-radius, opacity;
-        }
-
-        .slime-grow-3 {
-          animation: slimeGrow3 48s ease-in-out infinite;
-          will-change: transform, border-radius, opacity;
-        }
-
-        .slime-grow-4 {
-          animation: slimeGrow4 55s ease-in-out infinite;
-          will-change: transform, border-radius, opacity;
-        }
-
-        .slime-grow-5 {
-          animation: slimeGrow5 50s ease-in-out infinite;
-          will-change: transform, border-radius, opacity;
-        }
-
-        .slime-grow-6 {
-          animation: slimeGrow6 58s ease-in-out infinite;
-          will-change: transform, border-radius, opacity;
-        }
-      `}</style>
     </>
   );
 }
